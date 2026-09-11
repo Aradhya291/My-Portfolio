@@ -45,7 +45,7 @@ export const portfolioData = {
     location: "Noida, Uttar Pradesh, India",
     email: "aradhyayadav76@gmail.com",
     phone: "+91 8707479271",
-    linkedin: "https://linkedin.com/in/Aradhya-Yadav",
+    linkedin: "https://www.linkedin.com/in/aradhya-yadav-40a87b271/",
     github: "https://github.com/Aradhya291",
     resumePdf: "/Aradhya_Yadav_Resume_Genai.pdf",
     bio: "AI/ML Engineer with end-to-end machine learning and deep learning project experience, specializing in Python, TensorFlow, Scikit-learn, and Large Language Models (LLMs). Designed and deployed three production-grade AI systems: an IoT anomaly detection model (94% detection accuracy, <2s latency), a deep ANN for molecular classification (88% validation accuracy, +50% reliability), and a multi-agent LLM policy forecasting pipeline (6 domain-specific agents analyzing 1,600+ speeches with zero data leakage). AWS-certified in ML, GenAI, and Data Analytics.",
