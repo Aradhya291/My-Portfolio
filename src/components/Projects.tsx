@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ExternalLink, CheckCircle2, Layers } from 'lucide-react';
-import { portfolioData, Project } from '../data/portfolioData';
+import { ExternalLink, CheckCircle2 } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 import { GithubIcon } from './Icons';
 
 export const Projects: React.FC = () => {
@@ -12,74 +12,61 @@ export const Projects: React.FC = () => {
     ? projects
     : projects.filter(p => p.category === activeFilter);
 
-  const getCategoryBadge = (category: Project['category']) => {
-    switch (category) {
-      case 'GenAI':
-        return { label: 'Generative AI & LLMs', color: 'text-cyan-400 bg-cyan-950/50 border-cyan-500/30' };
-      case 'ML/IoT':
-        return { label: 'Machine Learning & IoT', color: 'text-indigo-400 bg-indigo-950/50 border-indigo-500/30' };
-      case 'DeepLearning':
-        return { label: 'Deep Neural Networks', color: 'text-emerald-400 bg-emerald-950/50 border-emerald-500/30' };
-    }
-  };
-
   return (
-    <section id="projects" className="py-24 relative">
-      {/* Subtle background glow */}
-      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-cyan-600/10 blur-[130px] -z-10 pointer-events-none rounded-full" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-20 border-t border-slate-800/60">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/60 border border-slate-700/60 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Featured Case Studies</span>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div className="max-w-xl">
+            <span className="text-xs font-mono uppercase tracking-wider text-indigo-400">
+              Featured Work
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1.5">
+              Production AI Case Studies
+            </h2>
+            <p className="mt-2 text-sm text-slate-300">
+              Systems designed and evaluated against rigorous latency, accuracy, and leakage benchmarks.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Production-Grade <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400">AI Systems</span>
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl">
-            Real-world architectures engineered with quantitative evaluation, low-latency deployment, and zero data leakage.
-          </p>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-8 p-1.5 rounded-2xl bg-slate-900/80 border border-slate-800 backdrop-blur-md">
+          {/* Minimal Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-lg bg-slate-900 border border-slate-800 self-start sm:self-auto">
             <button
               onClick={() => setActiveFilter('All')}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 activeFilter === 'All'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              All Projects ({projects.length})
+              All ({projects.length})
             </button>
             <button
               onClick={() => setActiveFilter('GenAI')}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 activeFilter === 'GenAI'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              Generative AI & LLMs
+              GenAI & LLMs
             </button>
             <button
               onClick={() => setActiveFilter('ML/IoT')}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 activeFilter === 'ML/IoT'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              Machine Learning & IoT
+              ML & IoT
             </button>
             <button
               onClick={() => setActiveFilter('DeepLearning')}
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 activeFilter === 'DeepLearning'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
               Deep Learning
@@ -87,113 +74,113 @@ export const Projects: React.FC = () => {
           </div>
         </div>
 
-        {/* Projects List */}
-        <div className="space-y-8">
-          {filteredProjects.map((project) => {
-            const badge = getCategoryBadge(project.category);
-
-            return (
-              <div
-                key={project.id}
-                className="glass-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-800/90 hover:border-indigo-500/40 transition-all duration-300 group shadow-xl shadow-black/30"
-              >
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                  {/* Left content */}
-                  <div className="flex-1">
-                    {/* Header Row */}
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${badge.color}`}>
-                        {badge.label}
+        {/* Projects Stack */}
+        <div className="space-y-6">
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="surface-card rounded-2xl p-6 sm:p-8"
+            >
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                {/* Main Content */}
+                <div className="flex-1">
+                  {/* Category & Date */}
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-[11px] font-mono text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-500/20">
+                      {project.category === 'GenAI'
+                        ? 'Generative AI & LLMs'
+                        : project.category === 'ML/IoT'
+                        ? 'Machine Learning & IoT'
+                        : 'Deep Learning'}
+                    </span>
+                    <span className="text-xs font-mono text-slate-500">
+                      {project.date}
+                    </span>
+                    {project.liveUrl && (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-400">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        Live App Available
                       </span>
-                      <span className="text-xs font-mono text-slate-400">
-                        {project.date}
-                      </span>
-                      {project.liveUrl && (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-500/30">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          Live Dashboard
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white group-hover:text-cyan-300 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm sm:text-base text-indigo-300/90 font-medium mt-1">
-                      {project.subtitle}
-                    </p>
-
-                    {/* Metrics Bar */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6">
-                      {project.metrics.map((metric, mIdx) => (
-                        <div
-                          key={mIdx}
-                          className="bg-slate-900/80 border border-slate-800/80 rounded-xl p-3 text-center"
-                        >
-                          <div className="text-lg font-bold text-white tracking-tight">
-                            {metric.value}
-                          </div>
-                          <div className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mt-0.5">
-                            {metric.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Bullet Points */}
-                    <ul className="space-y-2.5 my-4">
-                      {project.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-300 leading-relaxed">
-                          <CheckCircle2 className="w-4 h-4 text-cyan-400 mt-1 shrink-0" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Tech Stack Pills */}
-                    <div className="flex flex-wrap gap-2 pt-4 mt-4 border-t border-slate-800/80">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-xs font-mono rounded-lg bg-slate-900/90 text-slate-300 border border-slate-700/60"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                    )}
                   </div>
 
-                  {/* Right side CTAs */}
-                  <div className="flex lg:flex-col gap-3 shrink-0 pt-2 lg:pt-0">
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 transition-all text-sm"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>Live App</span>
-                      </a>
-                    )}
+                  {/* Title */}
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    {project.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                    {project.subtitle}
+                  </p>
 
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-medium text-slate-200 bg-slate-900 hover:bg-slate-800 hover:text-white border border-slate-700/80 hover:border-slate-600 transition-all text-sm"
+                  {/* Quantitative Metrics Row */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-5">
+                    {project.metrics.map((metric, mIdx) => (
+                      <div
+                        key={mIdx}
+                        className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2.5 text-center"
                       >
-                        <GithubIcon className="w-4 h-4 text-slate-400" />
-                        <span>View Code</span>
-                      </a>
-                    )}
+                        <div className="text-base font-semibold text-white">
+                          {metric.value}
+                        </div>
+                        <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400 mt-0.5">
+                          {metric.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bullets */}
+                  <ul className="space-y-2 text-xs sm:text-sm text-slate-300 my-4">
+                    {project.bullets.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-start gap-2.5 leading-relaxed">
+                        <CheckCircle2 className="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-slate-800/80">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2.5 py-1 text-[11px] font-mono rounded bg-slate-900 text-slate-300 border border-slate-800"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
+
+                {/* Actions */}
+                <div className="flex lg:flex-col gap-2.5 shrink-0 pt-2 lg:pt-0">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Live App</span>
+                    </a>
+                  )}
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg transition-colors"
+                    >
+                      <GithubIcon className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Source Code</span>
+                    </a>
+                  )}
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>

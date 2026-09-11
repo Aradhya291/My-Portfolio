@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Menu, X, Terminal } from 'lucide-react';
+import { Download, Menu, X } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export const Navbar: React.FC = () => {
@@ -17,6 +17,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Projects', href: '#projects' },
+    { name: 'Playground', href: '#playground' },
     { name: 'Skills', href: '#skills' },
     { name: 'Certifications', href: '#certifications' },
     { name: 'Education', href: '#education' },
@@ -25,91 +26,74 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         scrolled
-          ? 'bg-[#060913]/85 backdrop-blur-md border-b border-slate-800/80 py-3.5 shadow-xl shadow-black/20'
+          ? 'bg-[#090d16]/90 backdrop-blur-md border-b border-white/[0.08] py-3.5 shadow-sm shadow-black/40'
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo / Brand */}
-          <a
-            href="#"
-            className="flex items-center gap-2.5 group transition-transform duration-200 hover:scale-[1.02]"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-[1px] flex items-center justify-center shadow-lg shadow-indigo-500/20">
-              <div className="w-full h-full bg-[#060913] rounded-[11px] flex items-center justify-center">
-                <Terminal className="w-5 h-5 text-cyan-400 group-hover:text-indigo-400 transition-colors" />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-base font-bold text-white tracking-tight flex items-center gap-1.5">
-                {portfolioData.personal.name}
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              </span>
-              <span className="text-xs text-slate-400 font-mono tracking-wider">AI/ML ENGINEER</span>
-            </div>
+          {/* Brand */}
+          <a href="#" className="flex items-center gap-2.5 group">
+            <span className="text-base font-semibold tracking-tight text-white group-hover:text-indigo-400 transition-colors">
+              {portfolioData.personal.name}
+            </span>
+            <span className="text-[11px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60">
+              AI / ML
+            </span>
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white rounded-lg hover:bg-slate-800/60 transition-all"
+                className="px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white rounded-md hover:bg-slate-800/50 transition-colors"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Action CTAs */}
+          {/* Right Action */}
           <div className="hidden sm:flex items-center gap-3">
             <a
               href={portfolioData.personal.resumePdf}
               download="Aradhya_Yadav_Resume_Genai.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-lg shadow-indigo-600/25 hover:shadow-indigo-500/35 transition-all duration-200 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 rounded-lg transition-colors"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5 text-indigo-400" />
               <span>Resume PDF</span>
             </a>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            <a
-              href={portfolioData.personal.resumePdf}
-              download="Aradhya_Yadav_Resume_Genai.pdf"
-              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800/80"
-              title="Download Resume"
-            >
-              <Download className="w-4 h-4" />
-            </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800/80 focus:outline-none"
-              aria-label="Toggle Navigation"
+              className="p-2 text-slate-400 hover:text-white rounded-lg bg-slate-800/60"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0a0f1d] border-b border-slate-800 px-4 pt-3 pb-6 mt-2 shadow-2xl">
+        <div className="md:hidden bg-[#0c101c] border-b border-slate-800 px-4 pt-3 pb-6 mt-2">
           <div className="flex flex-col space-y-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2.5 text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-lg transition-colors"
+                className="px-3 py-2 text-sm font-medium text-slate-300 hover:text-white rounded-md hover:bg-slate-800/60"
               >
                 {link.name}
               </a>
@@ -118,10 +102,10 @@ export const Navbar: React.FC = () => {
               <a
                 href={portfolioData.personal.resumePdf}
                 download="Aradhya_Yadav_Resume_Genai.pdf"
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg"
               >
                 <Download className="w-4 h-4" />
-                Download Resume (PDF)
+                <span>Download Resume (PDF)</span>
               </a>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bot, Play, RefreshCw, Cpu } from 'lucide-react';
+import { Bot, Play, RefreshCw, Terminal } from 'lucide-react';
 
 interface ForecastResult {
   decision: 'CUT' | 'HOLD' | 'HIKE';
@@ -22,7 +22,7 @@ interface ForecastResult {
 const PRESETS = [
   {
     title: "Scenario A: Hawkish",
-    desc: "Inflation Surge & Wage Pressures",
+    desc: "Inflation Surge & Elevated Wages",
     text: "Recent core CPI and PCE prints show persistent services inflation remaining stubbornly above our 2.0% objective. Tight labor conditions and elevated wage pressures pose significant upside risks to prices."
   },
   {
@@ -42,7 +42,6 @@ export const AiPlayground: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ForecastResult | null>(null);
 
-  // Client-side fallback if Flask backend is not yet started in local dev
   const runClientFallback = (text: string): ForecastResult => {
     const t = text.toLowerCase();
     const hawk = (t.match(/inflation|surge|elevated|tight|wage|upside/g) || []).length;
@@ -72,17 +71,17 @@ export const AiPlayground: React.FC = () => {
         inflation_agent: {
           stance: hawk > 0 ? "Hawkish" : "Neutral",
           signal_strength: hawk,
-          focus: "Core PCE & price stability"
+          focus: "Core PCE & price trajectory"
         },
         labor_agent: {
           stance: dove > 0 ? "Dovish" : (hawk > 0 ? "Hawkish" : "Neutral"),
           signal_strength: Math.abs(dove),
-          focus: "Unemployment rate & wage trajectory"
+          focus: "Unemployment rate & wage pressures"
         },
         gdp_growth_agent: {
           stance: dove > 0 ? "Dovish" : "Neutral",
           signal_strength: 1,
-          focus: "Output deceleration risks"
+          focus: "Quarterly output deceleration"
         },
         financial_markets_agent: {
           stance: hawk > dove ? "Hawkish" : (dove > hawk ? "Dovish" : "Neutral"),
@@ -123,28 +122,27 @@ export const AiPlayground: React.FC = () => {
   };
 
   return (
-    <section className="py-20 relative overflow-hidden bg-slate-950/40 border-y border-slate-800/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Bot className="w-3.5 h-3.5" />
-            <span>Interactive AI Playground</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Test the <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-emerald-400">MoE Policy Engine</span>
+    <section id="playground" className="py-20 border-t border-slate-800/60">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="max-w-xl mb-10">
+          <span className="text-xs font-mono uppercase tracking-wider text-indigo-400">
+            Interactive AI Sandbox
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1.5">
+            Test the Policy Forecasting Engine
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-300 max-w-2xl">
-            Live simulation powered by a <strong className="text-white">Python Flask</strong> serverless backend. Choose a Federal Reserve scenario or input your own statement to see agent consensus in action.
+          <p className="mt-2 text-sm text-slate-300">
+            Live simulation powered by the Python Flask backend. Test simulated Fed statement scenarios across domain agents.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Controls & Input Column */}
+          {/* Inputs Column */}
           <div className="lg:col-span-6 space-y-4">
-            {/* Presets */}
-            <div className="space-y-2">
-              <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
-                Select Macroeconomic Scenario:
+            <div>
+              <label className="text-xs font-medium text-slate-400 uppercase tracking-wider block mb-2">
+                Sample Scenario:
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {PRESETS.map((preset, idx) => (
@@ -155,53 +153,52 @@ export const AiPlayground: React.FC = () => {
                       setStatement(preset.text);
                       setResult(null);
                     }}
-                    className={`p-3 text-left rounded-xl border transition-all text-xs ${
+                    className={`p-3 text-left rounded-lg border transition-colors text-xs ${
                       statement === preset.text
-                        ? 'bg-indigo-950/60 border-indigo-500/60 text-white shadow-md'
-                        : 'bg-slate-900/70 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                        ? 'bg-slate-800 border-indigo-500 text-white'
+                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
                     }`}
                   >
-                    <div className="font-bold text-white mb-0.5">{preset.title}</div>
+                    <div className="font-semibold text-white mb-0.5">{preset.title}</div>
                     <div className="text-[11px] text-slate-400 truncate">{preset.desc}</div>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Custom Input */}
-            <div className="glass-panel p-4 sm:p-5 rounded-2xl border border-slate-800">
+            <div className="surface-card p-5 rounded-xl">
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-semibold text-slate-300">
-                  Economic Speech / Fed Statement Text:
+                <label className="text-xs font-medium text-slate-300">
+                  Economic Statement Text:
                 </label>
                 <span className="text-[11px] font-mono text-slate-500">
-                  {statement.length} characters
+                  {statement.length} chars
                 </span>
               </div>
               <textarea
                 rows={5}
                 value={statement}
                 onChange={(e) => setStatement(e.target.value)}
-                placeholder="Paste or type any macroeconomic speech snippet here..."
-                className="w-full p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none leading-relaxed font-mono text-xs"
+                className="w-full p-3 rounded-lg surface-input text-xs font-mono text-slate-200 placeholder-slate-500 transition-colors resize-none leading-relaxed"
+                placeholder="Paste macroeconomic statement here..."
               />
 
               <div className="flex items-center justify-between mt-4">
-                <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Python Flask Endpoint: <code className="text-slate-300">/api/forecast</code></span>
-                </div>
+                <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Flask: <code className="text-slate-300">/api/forecast</code></span>
+                </span>
 
                 <button
                   type="button"
                   onClick={handleRunForecast}
                   disabled={loading || !statement.trim()}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs text-white bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 shadow-lg shadow-cyan-600/20 disabled:opacity-50 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 transition-colors disabled:opacity-50"
                 >
                   {loading ? (
                     <>
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      <span>Analyzing...</span>
+                      <span>Computing...</span>
                     </>
                   ) : (
                     <>
@@ -214,19 +211,19 @@ export const AiPlayground: React.FC = () => {
             </div>
           </div>
 
-          {/* Results Display Column */}
+          {/* Results Column */}
           <div className="lg:col-span-6">
             {result ? (
-              <div className="glass-panel p-6 rounded-2xl border border-slate-800 space-y-5 animate-in fade-in duration-300">
-                {/* Decision Header Card */}
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+              <div className="surface-card p-6 rounded-xl space-y-5">
+                {/* Result header */}
+                <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                   <div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wider font-mono">
-                      Policy Decision Forecast
-                    </div>
-                    <div className="flex items-baseline gap-3 mt-1">
+                    <span className="text-[11px] font-mono text-slate-400 uppercase">
+                      Forecasted Decision
+                    </span>
+                    <div className="flex items-baseline gap-3 mt-0.5">
                       <span
-                        className={`text-3xl font-black tracking-tight ${
+                        className={`text-2xl font-bold tracking-tight ${
                           result.decision === 'HIKE'
                             ? 'text-rose-400'
                             : result.decision === 'CUT'
@@ -236,65 +233,62 @@ export const AiPlayground: React.FC = () => {
                       >
                         {result.decision}
                       </span>
-                      <span className="text-sm font-semibold text-slate-300">
-                        {result.confidence} Confidence
+                      <span className="text-xs font-mono text-slate-300">
+                        {result.confidence} confidence
                       </span>
                     </div>
                   </div>
 
                   <div className="text-right">
-                    <div className="text-[11px] text-slate-400 font-mono">Latency</div>
-                    <div className="text-sm font-mono font-bold text-cyan-400">
+                    <span className="text-[11px] font-mono text-slate-500">Latency</span>
+                    <div className="text-xs font-mono text-indigo-400">
                       {result.execution_time_ms} ms
                     </div>
                   </div>
                 </div>
 
                 {/* Recommendation */}
-                <p className="text-xs sm:text-sm text-slate-300 italic bg-slate-900/50 p-3 rounded-xl border border-slate-800/80">
+                <p className="text-xs text-slate-300 italic bg-slate-900/60 p-3 rounded-lg border border-slate-800/80">
                   "{result.recommendation}"
                 </p>
 
-                {/* Probability Distribution */}
+                {/* Probabilities */}
                 <div>
-                  <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider font-mono">
-                    Stance Probabilities
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">
+                    Decision Probabilities
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
                       <div className="text-emerald-400 font-bold">{result.probabilities.CUT}</div>
                       <div className="text-[10px] text-slate-500 font-mono">CUT</div>
                     </div>
-                    <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
                       <div className="text-amber-400 font-bold">{result.probabilities.HOLD}</div>
                       <div className="text-[10px] text-slate-500 font-mono">HOLD</div>
                     </div>
-                    <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
                       <div className="text-rose-400 font-bold">{result.probabilities.HIKE}</div>
                       <div className="text-[10px] text-slate-500 font-mono">HIKE</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Agent Consensus Breakdown */}
+                {/* Agent Consensus */}
                 <div>
-                  <div className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider font-mono">
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-2">
                     Specialized Agent Stances
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {Object.entries(result.agent_consensus).map(([key, agent]) => {
-                      const name = key
-                        .replace('_agent', '')
-                        .replace('_', ' ')
-                        .toUpperCase();
+                      const name = key.replace('_agent', '').replace('_', ' ').toUpperCase();
 
                       return (
                         <div
                           key={key}
-                          className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between"
+                          className="p-2.5 rounded bg-slate-900/80 border border-slate-800 flex items-center justify-between"
                         >
                           <div>
-                            <div className="text-[11px] font-bold text-white tracking-tight">
+                            <div className="text-[11px] font-semibold text-white">
                               {name}
                             </div>
                             <div className="text-[10px] text-slate-400">
@@ -302,11 +296,11 @@ export const AiPlayground: React.FC = () => {
                             </div>
                           </div>
                           <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                            className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium ${
                               agent.stance === 'Hawkish'
-                                ? 'bg-rose-950/60 text-rose-300 border border-rose-500/30'
+                                ? 'bg-rose-950/40 text-rose-300 border border-rose-500/20'
                                 : agent.stance === 'Dovish'
-                                ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30'
+                                ? 'bg-emerald-950/40 text-emerald-300 border border-emerald-500/20'
                                 : 'bg-slate-800 text-slate-300 border border-slate-700'
                             }`}
                           >
@@ -319,14 +313,14 @@ export const AiPlayground: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="glass-panel p-10 rounded-2xl border border-slate-800 flex flex-col items-center justify-center text-center h-full min-h-[320px]">
-                <Bot className="w-10 h-10 text-slate-600 mb-3" />
-                <h4 className="text-base font-bold text-slate-300">
-                  Ready to Run Inference
-                </h4>
-                <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                  Click <strong className="text-slate-400">"Run MoE Forecast"</strong> to send the statement to the Python Flask backend and visualize multi-agent consensus.
-                </p>
+              <div className="surface-card p-8 rounded-xl flex flex-col items-center justify-center text-center h-full min-h-[280px]">
+                <Bot className="w-8 h-8 text-slate-600 mb-2" />
+                <div className="text-xs font-medium text-slate-300">
+                  Ready to test MoE inference
+                </div>
+                <div className="text-[11px] text-slate-500 mt-1 max-w-xs">
+                  Select a scenario and click "Run MoE Forecast" to query the Python Flask backend.
+                </div>
               </div>
             )}
           </div>
