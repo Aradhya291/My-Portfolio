@@ -18,6 +18,7 @@ export interface Certification {
   issuer: string;
   date: string;
   badgeType: 'aws' | 'deeplearning' | 'intel';
+  credentialUrl: string;
 }
 
 export interface EducationItem {
@@ -51,11 +52,11 @@ export const portfolioData = {
   },
   stats: [
     { label: "Anomaly Detection Rate", value: "94%" },
-    { label: "System Response Latency", value: "< 2s" },
+    { label: "System Latency", value: "< 2s" },
     { label: "MoE LLM Agents", value: "6" },
-    { label: "ANN Validation Accuracy", value: "88%" },
+    { label: "ANN Validation Acc.", value: "88%" },
     { label: "Speeches Analyzed", value: "1,600+" },
-    { label: "AWS & AI Certifications", value: "5" },
+    { label: "Industry Certifications", value: "5" },
   ],
   projects: [
     {
@@ -176,31 +177,36 @@ export const portfolioData = {
       title: "AWS Academy Graduate - Generative AI Foundations",
       issuer: "Amazon Web Services (AWS)",
       date: "Feb 2026",
-      badgeType: "aws"
+      badgeType: "aws",
+      credentialUrl: "https://www.credly.com/badges/80934309-4290-4cf3-9b21-deb524c9df14/public_url"
     },
     {
       title: "AWS Academy Graduate - Machine Learning",
       issuer: "Amazon Web Services (AWS)",
       date: "Oct 2025",
-      badgeType: "aws"
+      badgeType: "aws",
+      credentialUrl: "https://www.credly.com/badges/fdf1cdb1-5f7e-456c-9674-e6881bc95063/public_url"
     },
     {
       title: "DeepLearning.AI – Sequence Models",
       issuer: "DeepLearning.AI",
       date: "Oct 2025",
-      badgeType: "deeplearning"
+      badgeType: "deeplearning",
+      credentialUrl: "https://www.coursera.org/account/accomplishments/verify/DA4S3KPMB8XM"
     },
     {
       title: "Intel AI Impact Global Festival – Generative AI",
       issuer: "Intel",
       date: "Oct 2024",
-      badgeType: "intel"
+      badgeType: "intel",
+      credentialUrl: "https://www.linkedin.com/in/aradhya-yadav-40a87b271/details/certifications/"
     },
     {
       title: "AWS Academy Graduate – Data Analytics",
       issuer: "Amazon Web Services (AWS)",
       date: "May 2023",
-      badgeType: "aws"
+      badgeType: "aws",
+      credentialUrl: "https://www.credly.com/badges/98d41773-ef3b-4fe2-b38d-17fd1edcb50b/public_url"
     }
   ] as Certification[],
   education: [
