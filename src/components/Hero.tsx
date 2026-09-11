@@ -9,7 +9,7 @@ export const Hero: React.FC = () => {
   return (
     <section className="relative pt-32 pb-16 md:pt-40 md:pb-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Row: Identity & Compact Profile Picture */}
+        {/* Header Row: Identity & Crisp Profile Avatar */}
         <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-slate-800/80">
           <div>
             {/* Availability Badge */}
@@ -29,13 +29,15 @@ export const Hero: React.FC = () => {
             </p>
           </div>
 
-          {/* Compact, understated profile picture (HCI: supportive identity, not dominant distraction) */}
+          {/* High-DPI Crisp Profile Avatar */}
           <div className="shrink-0">
             <div className="relative">
               <img
                 src="/profile.jpg"
                 alt="Aradhya Yadav"
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover object-top border border-white/10 shadow-md shadow-black/50"
+                width={112}
+                height={112}
+                className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border border-white/10 shadow-lg shadow-black/50"
               />
               <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#090d16] flex items-center justify-center">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
